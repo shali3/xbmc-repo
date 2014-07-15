@@ -70,7 +70,12 @@ class Generator:
                 tree = ET.parse(_path)
                 root = tree.getroot()
                 zip_file_name = '%s-%s.zip' % (root.attrib['id'], root.attrib['version'])
-                zip = zipfile.ZipFile(os.path.join("repo", zip_file_name), 'w')
+
+
+                if not addon.startswith("repository"): # this will zip the repositories in the root folder.
+                    zip_file_name = os.path.join("repo", zip_file_name)
+
+                zip = zipfile.ZipFile(zip_file_name, 'w')
                 for root, dirs, files in os.walk(addon):
                     for file in files:
                         if files not in self.excludedFiles:
@@ -92,7 +97,7 @@ class Generator:
         for addon in addons:
             try:
                 # skip any file or .svn folder or .git folder
-                if not os.path.isdir(addon) or addon in self.excludedFolders: continue
+                if not os.path.isdir(addon) or addon in self.excludedFolders or addon.startswith("repository"): continue
                 # create path
                 _path = os.path.join(addon, "addon.xml")
                 # split lines for stripping

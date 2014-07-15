@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.shali" name="ShaLi's XBMC Addons repo" version="1.0.0" provider-name="ShaLi">
+    <extension point="xbmc.addon.repository" name="XBMC Israeli streaming repo for streaming sites">
+        <info compressed="false">https://raw.githubusercontent.com/shali3/xbmc-repo/master/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/shali3/xbmc-repo/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://github.com/shali3/xbmc-repo/raw/master/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>ShaLi's XBMC Addons repo</summary>
+        <description>Download and install addons developed by ShaLi</description>
+        <platform>all</platform>
+    </extension>
+</addon>
