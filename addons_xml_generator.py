@@ -25,6 +25,7 @@
 
 import os
 import sys
+import shutil
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -72,8 +73,13 @@ class Generator:
                 zip_file_name = '%s-%s.zip' % (root.attrib['id'], root.attrib['version'])
 
                 if not addon.startswith("repository"):  # this will zip the repositories in the root folder.
-                    dir = os.path.join('repo',addon)
-                    os.makedirs(dir)
+                    dir = os.path.join('repo', addon)
+                    if not os.path.exists(dir):
+                        os.makedirs(dir)
+                    icon_path = os.path.join(addon, 'icon.png')
+                    if os.path.exists(icon_path):
+                        shutil.copyfile(icon_path, os.path.join(dir, 'icon.png'))
+                        print "coping icon for " + addon
                     zip_file_name = os.path.join(dir, zip_file_name)
 
                 zip = zipfile.ZipFile(zip_file_name, 'w')
