@@ -71,9 +71,10 @@ class Generator:
                 root = tree.getroot()
                 zip_file_name = '%s-%s.zip' % (root.attrib['id'], root.attrib['version'])
 
-
-                if not addon.startswith("repository"): # this will zip the repositories in the root folder.
-                    zip_file_name = os.path.join("repo", zip_file_name)
+                if not addon.startswith("repository"):  # this will zip the repositories in the root folder.
+                    dir = os.path.join('repo',addon)
+                    os.makedirs(dir)
+                    zip_file_name = os.path.join(dir, zip_file_name)
 
                 zip = zipfile.ZipFile(zip_file_name, 'w')
                 for root, dirs, files in os.walk(addon):
