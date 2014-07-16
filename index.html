@@ -12,6 +12,17 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+        return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1396788027212815&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <header>
     <div class="container">
@@ -56,6 +67,7 @@
             <li>Pause Live TV when there's an alarm in you region (off by default, can be disabled from settings)</li>
         </ol>
     </section>
+    <div class="fb-comments" data-href="http://shali3.github.io/xbmc-repo/" data-numposts="5" data-colorscheme="dark"></div>
 </div>
 
 <script type="text/javascript">
