@@ -163,18 +163,14 @@ def check_for_alerts():
 
 
 if len(getSetting('alert_code').strip()) == 0:
-    xbmcgui.Dialog().ok("Red Alert Israel",
+    response = xbmcgui.Dialog().ok("Red Alert Israel",
                         'You need to specify region codes you want to be alerted on. '
                         'You can find them at oref.gov.il.\n'
                         'You can specify more than one by separating with spaces.\n'
                         'For example: Tel-Aviv is 157 and Givataim is 160.')
-    codes = xbmcgui.Dialog().input('Enter Red Alert region codes')
-    if codes:
-        xbmcaddon.Addon().setSetting('alert_code', codes)
-    else:
-        xbmcgui.Dialog().notification('Red Alert Israel',
-                                      "Since you haven't specified a region code, you will be alerted on all regions.")
-
+    if response:
+        xbmcaddon.Addon().openSettings()
+	
 counter = 0;
 while not xbmc.abortRequested:
     if counter == 0:
