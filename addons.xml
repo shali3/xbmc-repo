@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="script.service.redalert" name="Israel Red Alerts" version="1.0.1" provider-name="ShaLi">
+<addon id="script.service.redalert" name="Israel Red Alerts" version="1.1.0" provider-name="ShaLi">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>

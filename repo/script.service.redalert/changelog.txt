@@ -1,0 +1,8 @@
+[B]Version 1.1.0[/B]
+- Added cities names
+
+[B]Version 1.0.1[/B]
+- Changed the way default settings are requested
+
+[B]Version 1.0.0[/B]
+- Created The addon

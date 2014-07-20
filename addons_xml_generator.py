@@ -50,6 +50,7 @@ class Generator:
     def __init__(self):
         # generate files
         self.excludedFolders = ['.svn', '.git', 'repo']
+        self.files_to_copy = ['icon.png', 'changelog.txt', 'fanart.jpg']
         self.excludedFiles = ['.DS_Store']
         self._generate_zip_files()
         self._generate_addons_file()
@@ -76,10 +77,11 @@ class Generator:
                     dir = os.path.join('repo', addon)
                     if not os.path.exists(dir):
                         os.makedirs(dir)
-                    icon_path = os.path.join(addon, 'icon.png')
-                    if os.path.exists(icon_path):
-                        shutil.copyfile(icon_path, os.path.join(dir, 'icon.png'))
-                        print "coping icon for " + addon
+                    for file in self.files_to_copy:
+                        file_path = os.path.join(addon, file)
+                        if os.path.exists(file_path):
+                            shutil.copyfile(file_path, os.path.join(dir, file))
+                            print "coping " + file + " for " + addon
                     zip_file_name = os.path.join(dir, zip_file_name)
 
                 zip = zipfile.ZipFile(zip_file_name, 'w')

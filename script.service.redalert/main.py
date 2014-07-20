@@ -22,6 +22,10 @@ __language__ = __addon__.getLocalizedString
 # sys.path.append (LIB_PATH)
 
 sound_file_path = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'alert.wav'))
+cities_file_path = xbmc.translatePath(os.path.join(__cwd__, 'resources', 'cities.json'))
+json_data = open(cities_file_path)
+area = json.load(json_data)
+json_data.close()
 
 
 def log(msg):
@@ -96,7 +100,7 @@ def fetch_data(url, utf16=True):
 
 
 def notify_alert(cities, in_user_region=False):
-    all_codes = [item for sublist in cities.values() for item in sublist]
+    all_cities = [item for sublist in cities.values() for item in sublist]
     time = str(datetime.datetime.now().time())
     time = time[:time.find('.')]
 
@@ -106,7 +110,7 @@ def notify_alert(cities, in_user_region=False):
     if in_user_region:
         timeout = 90000
     xbmcgui.Dialog().notification("Red Alert %s" % time,
-                                  "%s (%s)" % (','.join(cities.keys()), ",".join(all_codes))
+                                  "%s (%s)" % (','.join(all_cities), ','.join(cities.keys()))
                                   , __icon__, timeout, not play_alert)
     player = xbmc.Player()
     if player.isPlaying():
@@ -126,7 +130,7 @@ def process_json(obj):
             alert_regions = re.findall("\d+", getSetting('alert_code'));
             alert_cities = []
             last_id = new_id
-            cities = {}
+            cities = {}  # code to cities names
             data = obj.get("data")
 
             for item in data:
@@ -135,23 +139,11 @@ def process_json(obj):
                     code = re.sub("[^\d]+", "", city).strip()
 
                     if len(alert_regions) == 0 or code in alert_regions:
-                        alert_cities.append(city_name)
-
-                    city_codes = cities.get(city_name, [])
-                    city_codes.append(code)
-                    cities[city_name] = city_codes
+                        city_codes = cities.get(code, [])
+                        city_codes += area.get(city, [])
+                        cities[code] = city_codes
 
             if len(cities) > 0:
-                message = ''
-                for city, codes in cities.iteritems():
-                    message += '\n%s -> %s' % (city, ','.join(codes))
-
-                log("[%s] Alert! Count %d %s " % (datetime.datetime.now(), len(data), message))
-
-            if len(alert_cities) > 0:
-                for city in cities.keys():
-                    if city not in alert_cities:
-                        del cities[city]
                 notify_alert(cities, len(alert_regions) > 0)
 
 
@@ -164,13 +156,13 @@ def check_for_alerts():
 
 if len(getSetting('alert_code').strip()) == 0:
     response = xbmcgui.Dialog().ok("Red Alert Israel",
-                        'You need to specify region codes you want to be alerted on. '
-                        'You can find them at oref.gov.il.\n'
-                        'You can specify more than one by separating with spaces.\n'
-                        'For example: Tel-Aviv is 157 and Givataim is 160.')
+                                   'You need to specify region codes you want to be alerted on. '
+                                   'You can find them at oref.gov.il.\n'
+                                   'You can specify more than one by separating with spaces.\n'
+                                   'For example: Tel-Aviv is 157 and Givataim is 160.')
     if response:
         xbmcaddon.Addon().openSettings()
-	
+
 counter = 0;
 while not xbmc.abortRequested:
     if counter == 0:
