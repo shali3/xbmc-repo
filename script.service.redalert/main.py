@@ -67,6 +67,8 @@ def play_wav(full_path):
             dsp.close()
     except:
         log('Failed to play file %s' % full_path);
+        if getSettingAsBool('play_alert_fallback'):
+            xbmc.Player().play(full_path)
 
 
 log("[%s] - Version: %s Started" % (__scriptname__, __version__))

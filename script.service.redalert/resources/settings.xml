@@ -3,6 +3,7 @@
   <category label="32100">
     <setting id="alert_code" type="text" label="32101" />
     <setting id="play_alert" type="bool" label="32104" default="true" />
+    <setting id="play_alert_fallback" type="bool" label="32105" default="true" />
     <setting id="pause_live_tv" type="bool" label="32102" default="false" />
     <setting id="pause_other" type="bool" label="32103" default="true" />
   </category>
