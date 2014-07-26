@@ -6,4 +6,5 @@
 	<string id="32103">Pause other content on alert (Videos, Music)</string>
     <string id="32104">Play loud alert in your region(s)</string>
     <string id="32105">Play alert in XBMC Player if alert sound fails</string>
+    <string id="32106">Show silent notification for alerts outside your region</string>
 </strings>

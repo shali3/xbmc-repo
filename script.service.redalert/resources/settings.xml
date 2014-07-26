@@ -6,5 +6,6 @@
     <setting id="play_alert_fallback" type="bool" label="32105" default="true" />
     <setting id="pause_live_tv" type="bool" label="32102" default="false" />
     <setting id="pause_other" type="bool" label="32103" default="true" />
+    <setting id="notify_all" type="bool" label="32106" default="false" />
   </category>
 </settings>

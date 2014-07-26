@@ -108,7 +108,7 @@ def notify_alert(cities, in_user_region=False):
 
     play_alert = in_user_region and getSettingAsBool('play_alert')
 
-    timeout = 5000
+    timeout = 20000
     if in_user_region:
         timeout = 90000
     xbmcgui.Dialog().notification("Red Alert %s" % time,
@@ -129,24 +129,26 @@ def process_json(obj):
     if obj:
         new_id = obj.get("id")
         if new_id != last_id:
-            alert_regions = re.findall("\d+", getSetting('alert_code'));
-            alert_cities = []
+            alert_regions = re.findall("\d+", getSetting('alert_code'))
+            in_user_region = False
+            notifyAll = getSettingAsBool('notify_all')
             last_id = new_id
             cities = {}  # code to cities names
             data = obj.get("data")
 
             for item in data:
                 for city in item.split(','):
-                    city_name = re.sub("\d+", "", city).strip()
                     code = re.sub("[^\d]+", "", city).strip()
 
-                    if len(alert_regions) == 0 or code in alert_regions:
-                        city_codes = cities.get(code, [])
-                        city_codes += area.get(city, [])
-                        cities[code] = city_codes
+                    if len(alert_regions) == 0 or notifyAll or code in alert_regions:
+                        if code in alert_regions:
+                            in_user_region = True
+                        cities_names = cities.get(code, [])
+                        cities_names += area.get(city, [])
+                        cities[code] = cities_names
 
             if len(cities) > 0:
-                notify_alert(cities, len(alert_regions) > 0)
+                notify_alert(cities, in_user_region)
 
 
 def check_for_alerts():
