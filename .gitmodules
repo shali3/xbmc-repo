@@ -1,0 +1,3 @@
+[submodule "script.service.redalert"]
+	path = script.service.redalert
+	url = https://github.com/shali3/xbmc-redalert.git
