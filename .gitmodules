@@ -1,3 +1,6 @@
 [submodule "script.service.redalert"]
 	path = script.service.redalert
 	url = https://github.com/shali3/xbmc-redalert.git
+[submodule "script.service.yo"]
+	path = script.service.yo
+	url = https://github.com/shali3/xbmc-yo.git
